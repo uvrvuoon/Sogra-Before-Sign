@@ -1,6 +1,9 @@
 {
   "type": "module",
   "dependencies": {
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "@google/genai": "*"
   }
 }
