@@ -63,7 +63,7 @@ export default function Home() {
   return (
     <main style={{ maxWidth: '650px', margin: '50px auto', padding: '20px', fontFamily: 'sans-serif' }}>
       <div style={{ textAlign: 'center', marginBottom: '35px' }}>
-        <h1 style={{ fontSize: '30px', fontWeight: 'bold', marginBottom: '10px' }}>집계약 안심금고 🔒</h1>
+        <h1 style={{ fontSize: '30px', fontWeight: 'bold', marginBottom: '10px' }}>🔒싸인전에🔒</h1>
         <p style={{ color: '#666', fontSize: '13.5px', letterSpacing: '-0.3px', whiteSpace: 'nowrap', margin: '0 auto' }}>
           AI 분석 전, 프론트 단에서 개인정보를 선제적으로 비식별화하여 안전하게 전월세 계약을 점검합니다.
         </p>
@@ -87,23 +87,34 @@ export default function Home() {
       </div>
 
       {/* 1차 결과 창 */}
-      {maskedText && (
-        <div style={{ marginTop: '35px', padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px' }}>
-          <h3 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#1e293b', marginBottom: '12px' }}>
-            🔒 프론트엔드 비식별화 처리 결과 (AI 전송 대기 데이터)
-          </h3>
-          <div style={{ padding: '15px', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '6px', whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '14px', color: '#000', marginBottom: '20px' }}>
-            {maskedText}
-          </div>
-          <button
-            onClick={handleSendToAIClick}
-            disabled={isLoading}
-            style={{ width: '100%', padding: '14px', background: isLoading ? '#94a3b8' : '#059669', color: '#fff', border: 'none', borderRadius: '10px', cursor: isLoading ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-          >
-            {isLoading ? "🤖 Gemini AI가 계약서를 분석 중입니다..." : "2단계: 비식별화된 데이터로 AI 분석 요청하기 🚀"}
-          </button>
-        </div>
-      )}
+      {/* 1차 결과 창 (마스킹 후 사용자가 직접 수정할 수 있는 편집 영역) */}
+{maskedText && (
+  <div style={{ marginTop: '35px', padding: '20px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px' }}>
+    <h3 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#1e293b', marginBottom: '12px' }}>
+      🔒 프론트엔드 비식별화 처리 결과 (가려지지 않은 개인정보를 확인 후 수정해주세요!)
+    </h3>
+    
+    {/* 💡 기존 div를 textarea로 변경하여 완벽한 사용자 편집 기능을 제공합니다. */}
+    <textarea
+      rows={8}
+      style={{ 
+        width: '100%', padding: '15px', borderRadius: '6px', border: '1px solid #cbd5e1', 
+        boxSizing: 'border-box', background: '#fff', color: '#000', fontSize: '14px', 
+        lineHeight: '1.5', fontFamily: 'monospace', marginBottom: '20px', resize: 'vertical'
+      }}
+      value={maskedText}
+      onChange={(e) => setMaskedText(e.target.value)} // 👈 사용자가 타이핑하는 대로 데이터가 실시간 업전송 대기 상태가 됩니다!
+    />
+
+    <button
+      onClick={handleSendToAIClick}
+      disabled={isLoading}
+      style={{ width: '100%', padding: '14px', background: isLoading ? '#94a3b8' : '#059669', color: '#fff', border: 'none', borderRadius: '10px', cursor: isLoading ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: '16px' }}
+    >
+      {isLoading ? "🤖 Gemini AI가 계약서를 분석 중입니다..." : "2단계: 최종 데이터로 AI 분석 요청하기 🚀"}
+    </button>
+  </div>
+)}
 
       {/* 2차 결과: 친구의 백엔드 JSON을 이쁘게 렌더링 */}
       {aiAnalysis && (
