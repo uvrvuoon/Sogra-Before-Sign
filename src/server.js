@@ -160,6 +160,6 @@ app.post("/api/analyze-contract", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running on port ${process.env.PORT || 3000}`);
+app.listen(5000, () => {
+  console.log(`🚀 내 노트북에서 백엔드 서버가 5000번 포트로 구동 중입니다!`);
 });
